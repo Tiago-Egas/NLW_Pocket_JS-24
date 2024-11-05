@@ -7,9 +7,14 @@ const fastify_1 = __importDefault(require("fastify"));
 const create_goal_1 = require("../features/create-goal");
 const fastify_type_provider_zod_1 = require("fastify-type-provider-zod");
 const zod_1 = __importDefault(require("zod"));
+const get_week_pending_goals_1 = require("../features/get-week-pending-goals");
 const app = (0, fastify_1.default)().withTypeProvider();
 app.setValidatorCompiler(fastify_type_provider_zod_1.validatorCompiler);
 app.setSerializerCompiler(fastify_type_provider_zod_1.serializerCompiler);
+app.get("/pending-goals", async () => {
+    const { pendingGoals } = await (0, get_week_pending_goals_1.getWeekPendingGoals)();
+    return { pendingGoals };
+});
 app.post("/goals", {
     schema: {
         body: zod_1.default.object({
