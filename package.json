@@ -4,7 +4,7 @@
 	"description": "NLW Pocket Javascript - 2024",
 	"main": "index.js",
 	"scripts": {
-		"dev": "tsx --env-file .env --watch src/http/server.ts",
+		"dev": "tsx --watch --env-file .env src/http/server.ts",
 		"seed": "tsx --env-file .env src/db/seed.ts",
 		"generate": "npx drizzle-kit generate",
 		"migrate": "npx drizzle-kit migrate",
@@ -25,6 +25,7 @@
 		"dayjs": "^1.11.13",
 		"drizzle-orm": "^0.36.0",
 		"fastify": "^5.1.0",
+		"fastify-type-provider-zod": "^4.0.2",
 		"postgres": "^3.4.5",
 		"zod": "^3.23.8"
 	}
