@@ -1,0 +1,11 @@
+name: pocketjs-server
+
+services:
+  pg:
+    image: bitnami/postgresql:13.16.0
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: pocketjs
+    ports:
+      - "5432:5432"

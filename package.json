@@ -1,20 +1,31 @@
 {
-  "name": "nlw_pocket_js-24",
-  "version": "1.0.0",
-  "description": "NLW Pocket Javascript - 2024",
-  "main": "index.js",
-  "scripts": {
-    "dev": "tsx watch src/http/server.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^22.8.7",
-    "tsx": "^4.19.2",
-    "typescript": "^5.6.3"
-  },
-  "dependencies": {
-    "fastify": "^5.1.0"
-  }
+	"name": "nlw_pocket_js-24",
+	"version": "1.0.0",
+	"description": "NLW Pocket Javascript - 2024",
+	"main": "index.js",
+	"scripts": {
+		"dev": "tsx --env-file .env --watch src/http/server.ts",
+		"seed": "tsx --env-file .env src/db/seed.ts",
+		"generate": "npx drizzle-kit generate",
+		"migrate": "npx drizzle-kit migrate",
+		"studio": "npx drizzle-kit studio"
+	},
+	"keywords": [],
+	"author": "Tiago Egas Costa",
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/node": "^22.8.7",
+		"drizzle-kit": "^0.27.1",
+		"tsx": "^4.19.2",
+		"typescript": "^5.6.3"
+	},
+	"dependencies": {
+		"@paralleldrive/cuid2": "^2.2.2",
+		"dayjs": "^1.11.13",
+		"drizzle-orm": "^0.36.0",
+		"fastify": "^5.1.0",
+		"postgres": "^3.4.5",
+		"zod": "^3.23.8"
+	}
 }
