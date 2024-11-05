@@ -14,9 +14,7 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 app.get("/pending-goals", async () => {
-	const { pendingGoals } = await getWeekPendingGoals();
-
-	return { pendingGoals };
+	return getWeekPendingGoals();
 });
 
 app.post(

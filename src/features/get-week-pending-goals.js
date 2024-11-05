@@ -21,20 +21,28 @@ async function getWeekPendingGoals() {
         createdAt: schema_1.goals.createdAt,
     })
         .from(schema_1.goals)
-        .where((0, drizzle_orm_1.lte)(schema_1.goals.createdAt, lastDayOfWeek)));
+        .where((0, drizzle_orm_1.lte)(schema_1.goals.createdAt, lastDayOfWeek))
+        .orderBy((0, drizzle_orm_1.desc)(schema_1.goals.createdAt)));
     const goalCompletionCounts = db_1.db.$with("goal_completion_counts").as(db_1.db
         .select({
         goalId: schema_1.goalCompletions.goalId,
-        completionsCount: (0, drizzle_orm_1.count)(schema_1.goalCompletions.id),
+        completionsCount: (0, drizzle_orm_1.count)(schema_1.goalCompletions.id).as("completionsCount"),
     })
         .from(schema_1.goalCompletions)
-        .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.gte)(schema_1.goals.createdAt, firstDayOfWeek), (0, drizzle_orm_1.lte)(schema_1.goals.createdAt, lastDayOfWeek)))
-        .groupBy(schema_1.goalCompletions.goalId)
-        .orderBy((0, drizzle_orm_1.desc)(schema_1.goalCompletions.id)));
-    const pendingGoals = await db_1.db
+        .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.gte)(schema_1.goalCompletions.createdAt, firstDayOfWeek), (0, drizzle_orm_1.lte)(schema_1.goalCompletions.createdAt, lastDayOfWeek)))
+        .groupBy(schema_1.goalCompletions.goalId, schema_1.goalCompletions.createdAt)
+        .orderBy((0, drizzle_orm_1.desc)(schema_1.goalCompletions.createdAt)));
+    return db_1.db
         .with(goalsCreatedUpToWeek, goalCompletionCounts)
-        .select()
+        .select({
+        id: goalsCreatedUpToWeek.id,
+        title: goalsCreatedUpToWeek.title,
+        desiredWeeklyFrequency: goalsCreatedUpToWeek.desiredWeeklyFrequency,
+        createdAt: goalsCreatedUpToWeek.createdAt,
+        completionsCount: (0, drizzle_orm_1.sql) `
+					coalesce(${goalCompletionCounts.completionsCount}, 0)
+					`.mapWith(Number),
+    })
         .from(goalsCreatedUpToWeek)
-        .toSQL();
-    return { pendingGoals };
+        .leftJoin(goalCompletionCounts, (0, drizzle_orm_1.eq)(goalCompletionCounts.goalId, goalsCreatedUpToWeek.id));
 }

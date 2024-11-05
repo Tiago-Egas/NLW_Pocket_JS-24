@@ -12,8 +12,7 @@ const app = (0, fastify_1.default)().withTypeProvider();
 app.setValidatorCompiler(fastify_type_provider_zod_1.validatorCompiler);
 app.setSerializerCompiler(fastify_type_provider_zod_1.serializerCompiler);
 app.get("/pending-goals", async () => {
-    const { pendingGoals } = await (0, get_week_pending_goals_1.getWeekPendingGoals)();
-    return { pendingGoals };
+    return (0, get_week_pending_goals_1.getWeekPendingGoals)();
 });
 app.post("/goals", {
     schema: {
