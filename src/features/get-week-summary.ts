@@ -1,3 +1,1 @@
-export async function getWeekSummary() {
-	return { summary: "teste" };
-}
+export async function getWeekSummary() {}
