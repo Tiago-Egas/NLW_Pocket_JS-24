@@ -2,10 +2,7 @@ import {db} from "../db";
 import {goalCompletions, goals} from "../db/schema";
 import {and, count, desc, eq, gte, lte, sql} from "drizzle-orm";
 import dayjs from "dayjs";
-
-interface CreateGoalCompletionRequest {
-	goalId: string;
-}
+import {CreateGoalCompletionRequest} from "../interfaces/goal-completion";
 
 export async function createGoalCompletion({
 	goalId,
